@@ -1,3 +1,5 @@
+/* 2-1 quantities and amounts */
+
 
 /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * .8;
@@ -78,21 +80,7 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
 
    // append Text
    
-   /* svg.append("text")
-      .attr ("x", (width - margin)/2)
-      .attr ("y", 10)
-      .attr("transform","translate(" + ((width - margin)/2)+ " ," + (height-10) + ")")
-      .style("text-anchor", "middle")
-      .text('Counts');
- 
-      svg.append("text")
-      .attr ("x", (width/2+margin))
-      .attr ("y", 0)
-      // .attr("transform","translate(" + ((width - margin)/2)+ " ," + (height-10) + ")")
-      .style("text-anchor", "left")
-      .text('Activities');
-*/
-      // printing counts at right of each bar
+   // printing counts at right of each bar
       svg.selectAll("text.cntLabel")
       .data(data)
       .join("text")
@@ -104,34 +92,18 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
       .attr("font-size", "9pt")
       .attr("text-anchor", "middle")
 
-/*      svg.selectAll("text.actLabel")
-      .data(data)
-      .join("text")
-      .attr("class", "actLabel")
-      .text(d => d.activity)
-      // position for x is: unchanged
-      // position for y is:
-      //  length of yScale(d.bandwidth() - length of yScale(d.activity) /2
-      .attr("x", d => xScale(d.count) - d.act_length / 2 )
-      .attr("y", d => yScale.bandwidth() - yScale(d.activity) / 2 ) 
-      .attr("fill" , "black")
-      .attr("font-size", "9pt")
-      .attr("text-anchor", "middle")
-*/
-    });   
-  // var yTextPadding = 20;
-    
-  //   // bar text
-  //   svg.selectAll(".bartext")
-  //     .data(data)
-  //     .enter()
-  //     .append("text")
-  //     .attr("class", "bartext")
-  //     .attr("text-anchor", "middle")
-  //     .attr("fill", "white")
-  //     .attr("x", function(d,i) {
-  //       return x(i)+x.rangeBand()/2; })
-  //     .attr("y", function(d,i) {
-  //        return height-y(d)+yTextPadding;})
-  //     .text(function(d,i)
-  //     return d;);
+
+ 
+  // ADD CHART TITLE
+  svg
+  .append("text")
+  .attr("class", "title")
+  .attr("x", width / 2)
+  .attr("y", height / 20) //higher the denominator, higher the text moves up pg
+  .attr("text-anchor", "middle")
+  .text('Squirrel Activities') 
+  .attr("font-family", "Cursive")
+  .style("font-size", "18px")
+  .style("font-weight", "bold")
+  .attr("fill", "blue")
+});   
