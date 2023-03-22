@@ -65,7 +65,6 @@ d3.csv("../data/organizations-100.csv", d=> {
     .attr("r", radius)
     .attr("fill", d => colorScale(d.IndustryCode))
 
-<<<<<<< HEAD
     svg
   .append("text")
   .attr("class", "title")
