@@ -1,3 +1,5 @@
+/* 2-2 distributions */
+
 /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * 0.7,
   height = window.innerHeight * 0.7,
@@ -77,3 +79,4 @@ d3.csv("../data/organizations-100.csv", d=> {
  
 
 });
+
