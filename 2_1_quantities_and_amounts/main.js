@@ -1,6 +1,5 @@
 /* 2-1 quantities and amounts */
 
-
 /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * .8;
 const height = window.innerHeight * .8;
@@ -48,4 +47,59 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
       .attr("width", width)
       .attr("height", height)
 
-  })
+    // bars
+    svg.selectAll("rect")
+      .data(data)
+      .join("rect")
+      .attr("class","bar")
+      .attr("x", margin)
+      .attr("y", d=>yScale(d.activity))
+      .attr("height", yScale.bandwidth()) 
+      .attr("width", d=>xScale(d.count)-margin)
+      .attr("fill", function(d, i) {
+        return color(i);
+      })
+      .text(function(d,i) {
+        return data[i].activity;
+      });
+    
+    // append xAxis
+    svg
+      .append("g")
+      .attr("class", "x-axis")
+      .style("transform", `translate(0px, ${height - margin}px)`)
+      .call(xAxis)
+  
+ // append yAxis
+ svg
+ .append("g")
+ .attr("class", "y-axis")
+ .style("transform", `translate(${margin}px, 0px)`)
+ .call(yAxis)
+
+ 
+      // printing counts at right of each bar
+      svg.selectAll("text.cntLabel")
+      .data(data)
+      .join("text")
+      .attr("class", "cntLabel")
+      .text(d => d.count)
+      .attr("x", d => xScale(d.count) + 15)
+      .attr("y", d => yScale(d.activity) + yScale.bandwidth() / 2)
+      .attr("fill" , "black")
+      .attr("font-size", "9pt")
+      .attr("text-anchor", "middle")
+
+/  // ADD CHART TITLE
+  svg
+  .append("text")
+  .attr("class", "title")
+  .attr("x", width / 2)
+  .attr("y", height / 20) //higher the denominator, higher the text moves up pg
+  .attr("text-anchor", "middle")
+  .text('Squirrel Activities') 
+  .attr("font-family", "Cursive")
+  .style("font-size", "18px")
+  .style("font-weight", "bold")
+  .attr("fill", "blue")
+});   
