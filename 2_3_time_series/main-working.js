@@ -6,11 +6,11 @@
     const formatBillions = (num) => d3.format(".2s")(num).replace(/G/, 'B') ;
    
 /* LOAD DATA */
-d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
+d3.csv("../data/IBM.csv", d => {  //parse the csv
     return {
         year: new Date(+d.Year, 0, 1), //way to convert the year (string) into a date
-        country: d.Entity, //entity will be relabeled as country 
-        population: +d.Population //will convert the pop (written as string) into # - +d = converts it
+        filterRow: d.FilterYear, //entity will be relabeled as country 
+        adjClose: +d.Adj_Close //will convert the pop (written as string) into # - +d = converts it
     }
 }).then(data => {
     console.log('data :>> ', data);
@@ -24,7 +24,7 @@ d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
 
     //Y scale
     const yScale = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.population)) //d3.extent looks w/in data & finds min/max pop
+        .domain(d3.extent(data, d => d.adjClose)) //d3.extent looks w/in data & finds min/max pop
         .range([height - margin.bottom, margin.top])
 
 
@@ -54,7 +54,7 @@ d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
 
 
     //FILTER DATA
-    const filteredData = data.filter(d => d.country === "United States") // will only show US data 
+    const filteredData = data.filter(d => d.filterRow === "1") // will only show US data 
     console.log('filtered', filteredData) //shows 119 data pts
 
 
@@ -65,7 +65,7 @@ d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
 
 
     //GROUP DATA
-    const groupedData = d3.groups(data, d => d.country) //want to group data by country - 1 line/country - d3.groups takes an accessor function
+    const groupedData = d3.groups(data, d => d.filterRow) //want to group data by country - 1 line/country - d3.groups takes an accessor function
     console.log('grouped', groupedData)
 
 
@@ -83,7 +83,7 @@ d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
     const area = d3.area() //area function requires x (accessor), .y0(baseline), .y1(topline)
         .x(d => xScale(d.year)) //set to the year scale
         .y0(d => yScale.range()[0]) //baseline set to range
-        .y1(d => yScale(d.population)) //topline set to population
+        .y1(d => yScale(d.adjClose)) //topline set to population
 
     // APPEND PATH ELEMENT TO AREA
     svg.append("path")
@@ -92,18 +92,7 @@ d3.csv("../data/populationOverTime.csv", d => {  //parse the csv
         .attr("d", area)
         .attr("fill", "red")
 
-// ADD CHART TITLE
-svg
-.append("text")
-.attr("class", "title")
-.attr("x", width / 2)
-.attr("y", height / 20) //higher the denominator, higher the text moves up pg
-.attr("text-anchor", "middle")
-.text(`${filteredData[0].country} Population`) //interpolates so that name updates to match country change
-.attr("font-family", "Cursive")
-.style("font-size", "16px")
-.style("font-weight", "bold")
-.attr("fill", "blue")
+
 });
 
 

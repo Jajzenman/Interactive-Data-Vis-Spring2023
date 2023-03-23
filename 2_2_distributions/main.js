@@ -63,4 +63,17 @@ d3.csv("../data/organizations-100.csv", d=> {
     .attr("r", radius)
     .attr("fill", d => colorScale(d.IndustryCode))
 
+    svg
+  .append("text")
+  .attr("class", "title")
+  .attr("x", width / 2)
+  .attr("y", height / 30) //higher the denominator, higher the text moves up pg
+  .attr("text-anchor", "middle")
+  .text('Companies by year founded and # of employees') 
+  .attr("font-family", "Cursive")
+  .style("font-size", "12px")
+  .style("font-weight", "bold")
+  .attr("fill", "blue")
+ 
+
 });

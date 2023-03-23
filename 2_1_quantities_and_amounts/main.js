@@ -118,7 +118,7 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
       .attr("font-size", "9pt")
       .attr("text-anchor", "middle")
 */
-    });   
+
   // var yTextPadding = 20;
     
   //   // bar text
@@ -135,3 +135,16 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
   //        return height-y(d)+yTextPadding;})
   //     .text(function(d,i)
   //     return d;);
+  // ADD CHART TITLE
+  svg
+  .append("text")
+  .attr("class", "title")
+  .attr("x", width / 2)
+  .attr("y", height / 20) //higher the denominator, higher the text moves up pg
+  .attr("text-anchor", "middle")
+  .text('Squirrel Activities') 
+  .attr("font-family", "Cursive")
+  .style("font-size", "18px")
+  .style("font-weight", "bold")
+  .attr("fill", "blue")
+});   
