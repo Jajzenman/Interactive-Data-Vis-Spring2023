@@ -1,3 +1,5 @@
+/* 2_3_time_series */
+
 /* CONSTANTS AND GLOBALS */
     const width = window.innerWidth * 0.7,
         height = window.innerHeight * 0.7,
@@ -105,7 +107,26 @@ d3.csv("../data/IBM.csv", d => {  //parse the csv
         .style("font-weight", "bold")
         .attr("fill", "blue")
 
+/*
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, 420]);
+*/
+var tooltip = d3.select("path")
+    .append("curs")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .style("background", "#000")
+    .text("a simple tooltip");
 
-});
-
-
+d3.select("path")
+  .selectAll("curs")
+  .data([filteredData])
+  .enter().append("curs")
+    .style("width", function(d) { return x(d) + "px"; })
+    .text(function(d) { return d; })
+    .on("mouseover", function(d){tooltip.text(d); return tooltip.style("visibility", "visible");})
+      .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+    });
